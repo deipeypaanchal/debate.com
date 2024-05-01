@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">{{ user.username }}</h4>
+        <p class="card-text">{{ user.bio }}</p>
+    </div>
+</div>
+
+<h5>Arguments by {{ user.username }}:</h5>
+<ul class="list-group">
+    {% for argument in user.arguments %}
+    <li class="list-group-item">
+        {{ argument.content }}
+        <br>
+        <small>Debate: <a href="{{ url_for('debate', debate_id=argument.debate_id) }}">{{ argument.debate.title }}</a></small>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

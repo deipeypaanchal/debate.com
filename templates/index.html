@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Welcome to the Daily Debate Site!</h1>
+<p>Explore the debates below or start your own!</p>
+<div class="list-group">
+    {% for debate in debates %}
+        <a href="{{ url_for('debate', debate_id=debate.id) }}" class="list-group-item list-group-item-action">
+            {{ debate.title }}
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

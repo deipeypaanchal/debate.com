@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>{{ debate.title }}</h2>
+{% if current_user.is_authenticated %}
+<form method="post">
+    <div class="mb-3">
+        <label for="content" class="form-label">Your Argument</label>
+        <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Argument</button>
+</form>
+{% else %}
+<p>Please <a href="{{ url_for('login') }}">login</a> to submit an argument.</p>
+{% endif %}
+<ul class="list-group mt-3">
+    {% for argument in arguments %}
+        <li class="list-group-item">{{ argument.content }} - <strong>{{ argument.author.username }}</strong></li>
+    {% endfor %}
+</ul>
+{% endblock %}
