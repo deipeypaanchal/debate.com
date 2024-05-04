@@ -99,18 +99,21 @@ def logout():
     return redirect(url_for('home'))
 
 @app.route('/create_debate', methods=['GET', 'POST'])
-@login_required
 def create_debate():
     if request.method == 'POST':
-        title = request.form.get('title')
-        if title:
-            new_debate = Debate(title=title)
-            db.session.add(new_debate)
-            db.session.commit()
-            flash('Debate created successfully!', 'success')
-            return redirect(url_for('home'))
-        flash('Title cannot be empty.', 'danger')
+        side1 = request.form['side1']
+        side2 = request.form['side2']
+        description = request.form['description']
+        title = request.form['title']  # This is automatically set by your JS in the form
+
+        # Create a new debate object and add it to the database
+        new_debate = Debate(title=title)
+        db.session.add(new_debate)
+        db.session.commit()
+        flash('Debate created successfully!', 'success')
+        return redirect(url_for('home'))
     return render_template('create_debate.html')
+
 
 @app.route('/debate/<int:debate_id>', methods=['GET', 'POST'])
 def debate(debate_id):
@@ -159,4 +162,4 @@ def internal_error(error):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
