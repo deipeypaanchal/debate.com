@@ -1,0 +1,19 @@
+<!-- waiting_room.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Waiting Room for {{ debate.title }}</h2>
+<p>Status: Waiting for participants on both sides to join.</p>
+
+<script>
+setInterval(function() {
+    fetch("{{ url_for('check_debate_status', debate_id=debate.id) }}")
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'ready') {
+            window.location.href = "{{ url_for('debate_room', debate_id=debate.id) }}";
+        }
+    });
+}, 5000); // check every 5 seconds
+</script>
+{% endblock %}

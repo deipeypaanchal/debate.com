@@ -1,0 +1,17 @@
+<!-- join_debate.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2>Join the Debate: {{ debate.title }}</h2>
+<form method="post">
+    {% for side in sides %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="selected_side" id="side{{ side.id }}" value="{{ side.id }}">
+        <label class="form-check-label" for="side{{ side.id }}">
+            {{ side.side }}
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Join Debate</button>
+</form>
+{% endblock %}

@@ -1,7 +1,28 @@
+<!-- debate.html -->
 {% extends 'layout.html' %}
 
 {% block content %}
+<script>
+function checkDebateStatus() {
+    fetch("{{ url_for('check_debate_status', debate_id=debate.id) }}")
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'ready') {
+            alert(data.message);
+            clearInterval(statusInterval);  // Stop checking once both sides are ready
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Check every 5 seconds if both sides are ready
+var statusInterval = setInterval(checkDebateStatus, 5000);
+</script>
+
 <h2>{{ debate.title }}</h2>
+<div>
+    <p>Status: <span id="status">Waiting for both sides to join...</span></p>
+</div>
 {% if current_user.is_authenticated %}
 <form method="post">
     <div class="mb-3">
